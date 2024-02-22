@@ -6,14 +6,22 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.security3.security3.config.security.filters.CustomAuthenticationFilter;
+
+import lombok.AllArgsConstructor;
+
 @Configuration
+@AllArgsConstructor
 public class SecurityConfig {
 
+    private final CustomAuthenticationFilter customAuthenticationFilter;
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .addFilterAt(,UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .addFilterAt(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests().anyRequest().authenticated()
+                .and().build();
     }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.security3.security3.config.mananger.CustomAuthenticationManager;
+import com.example.security3.security3.config.security.authetication.CustomAuthentication;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,6 +23,9 @@ public class CustomAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+        String key = String.valueOf(request.getHeader("key"));
+        CustomAuthentication ca = new CustomAuthentication(false);
 
         var a = customAuthenticationManager.authenticate(null);
 
